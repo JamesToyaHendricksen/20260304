@@ -11,6 +11,9 @@
     <div class="card shadow-sm">
         <div class="card-body text-center py-5">
             <h1 class="h3 mb-3">登録が完了しました</h1>
+            <p class="text-body-secondary mb-4">
+                タイトル: <span class="fw-semibold" th:text="${title}">サンプルタスク</span>
+            </p>
             <a class="btn btn-primary" th:href="@{/todo}">一覧へ戻る</a>
         </div>
     </div>
