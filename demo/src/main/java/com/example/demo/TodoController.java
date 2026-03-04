@@ -80,6 +80,15 @@ public class TodoController {
         return "redirect:/todo";
     }
 
+    @PostMapping("/{id}/toggle")
+    public String toggle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        boolean toggled = todoService.toggleCompleted(id);
+        if (!toggled) {
+            redirectAttributes.addFlashAttribute("errorMessage", "対象のToDoが見つかりませんでした");
+        }
+        return "redirect:/todo";
+    }
+
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         boolean deleted = todoService.deleteById(id);

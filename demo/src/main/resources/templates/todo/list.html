@@ -14,11 +14,11 @@
     </div>
 
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show auto-dismiss" role="alert">
-        <span th:text="${successMessage}">ToDoを削除しました</span>
+        <span th:text="${successMessage}">操作が完了しました</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show auto-dismiss" role="alert">
-        <span th:text="${errorMessage}">削除に失敗しました</span>
+        <span th:text="${errorMessage}">操作に失敗しました</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
@@ -43,14 +43,23 @@
             <tbody>
             <tr th:each="todo : ${todos}">
                 <td th:text="${todo.id}">1</td>
-                <td th:text="${todo.title}">サンプルタスク</td>
                 <td>
-                    <span class="badge" th:classappend="${todo.completed} ? ' text-bg-success' : ' text-bg-secondary'"
+                    <span th:text="${todo.title}" th:style="${todo.completed} ? 'text-decoration: line-through;' : ''">サンプルタスク</span>
+                </td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${todo.completed} ? ' text-bg-success' : ' text-bg-secondary'"
                           th:text="${todo.completed} ? '完了' : '未完了'">未完了</span>
                 </td>
                 <td>
                     <div class="d-flex gap-2">
                         <a class="btn btn-outline-primary btn-sm" th:href="@{/todo/{id}/edit(id=${todo.id})}">編集</a>
+
+                        <form th:action="@{/todo/{id}/toggle(id=${todo.id})}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-success btn-sm"
+                                    th:text="${todo.completed} ? '未完了に戻す' : '完了にする'">完了にする</button>
+                        </form>
+
                         <form th:action="@{/todo/{id}/delete(id=${todo.id})}" method="post" class="d-inline"
                               onsubmit="return confirm('本当に削除しますか？');">
                             <button type="submit" class="btn btn-danger btn-sm">削除</button>
