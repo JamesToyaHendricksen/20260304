@@ -14,13 +14,18 @@ public class TodoController {
     @GetMapping
     public String list(Model model) {
         List<TodoItem> todos = List.of(
-                new TodoItem(1L, "環境構築", "完了"),
-                new TodoItem(2L, "画面設計", "進行中"),
-                new TodoItem(3L, "テスト作成", "未着手")
+                new TodoItem(1L, "Environment setup", "Done"),
+                new TodoItem(2L, "Screen design", "In progress"),
+                new TodoItem(3L, "Write tests", "Not started")
         );
 
         model.addAttribute("todos", todos);
         return "todo/list";
+    }
+
+    @GetMapping("/new")
+    public String newForm() {
+        return "todo/new";
     }
 
     public record TodoItem(Long id, String title, String status) {
